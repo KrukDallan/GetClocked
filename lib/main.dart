@@ -7,6 +7,7 @@ import 'package:getclocked/workhour.dart';
 import 'package:getclocked/boxes.dart';
 import 'package:getclocked/shared.dart';
 import 'package:getclocked/settings.dart';
+import 'package:getclocked/hivesettings.dart';
 
 // TODO: LinkedHashMap or Set instead of List
 
@@ -33,6 +34,8 @@ void main() async {
   Hive.registerAdapter(WorkHourAdapter());
 
   boxWorkHours = await Hive.openBox<WorkHour>('workHour');
+
+  boxSettings = await Hive.openBox<HiveSettings>('settings');
 
   if (boxWorkHours.length > 0) {
     for (int i = 0; i < boxWorkHours.length; i++) {
