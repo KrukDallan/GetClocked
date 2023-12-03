@@ -430,10 +430,10 @@ class AnnotatePage extends StatelessWidget {
             SizedBox(
               child: Text(
                 "Welcome!",
-                textScaler: const TextScaler.linear(1.5),
                 style: TextStyle(
                     fontWeight: FontWeight.w500, 
-                    color: colorScheme.onSecondary),
+                    color: colorScheme.onSecondary,
+                    fontSize: 24),
               ),
             ),
             const Padding(padding: EdgeInsets.only(bottom: 480 * 0.5 * 0.4)),
@@ -601,66 +601,6 @@ class AnnotatePage extends StatelessWidget {
                       child: Icon(Icons.settings,
                       color: colorScheme.secondary,)),
                 ),*/
-                Padding(
-                  padding: const EdgeInsets.only(right: 20, bottom: 30),
-                  child: FloatingActionButton(
-                      backgroundColor: colorScheme.primary,
-                      elevation: 20,
-                      onPressed: () => showDialog(
-                          context: context,
-                          builder: (BuildContext context) => SimpleDialog(
-                                backgroundColor: colorScheme.background,
-                                title: const Text('Select your working hours'),
-                                children: [
-                                  SimpleDialogOption(
-                                    child: NumberPicker(
-                                        minValue: 0,
-                                        maxValue: 23,
-                                        value: currentValueH,
-                                        onChanged: (value) =>
-                                            MyApp.of(context).setState(() {
-                                              currentValueH = value;
-                                            })),
-                                  ),
-                                  SimpleDialogOption(
-                                    child: NumberPicker(
-                                        minValue: 0,
-                                        maxValue: 59,
-                                        value: currentValueM,
-                                        onChanged: (value) =>
-                                            MyApp.of(context).setState(() {
-                                              currentValueM = value;
-                                            })),
-                                  ),
-                                  Center(
-                                    child: SimpleDialogOption(
-                                      onPressed: () {
-                                        // TODO: set the sharedOvertime to match the user choice
-                                        Navigator.pop(context, SimpleDialog);
-                                      },
-                                      child: const Text(
-                                        'Confirm',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ),
-                                  ),
-                                  Center(
-                                    child: SimpleDialogOption(
-                                      onPressed: () {
-                                        Navigator.pop(context, SimpleDialog);
-                                      },
-                                      child: const Text(
-                                        'Cancel',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )),
-                              child: Icon(Icons.settings, color: colorScheme.secondary,),),
-                )
               ],
             ),
           ],
@@ -689,9 +629,9 @@ class HistoryPage extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
+        backgroundColor: colorScheme.primary,
         body: SingleChildScrollView(
           child: Column(
-            mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -700,13 +640,13 @@ class HistoryPage extends StatelessWidget {
                 child: Text(
                   'Your annotations',
                   style: TextStyle(
-                      fontSize: 16.0,
+                      fontSize: 24.0,
                       fontStyle: FontStyle.normal,
                       fontWeight: FontWeight.w500,
                       color: colorScheme.onSecondary),
                 ),
               ),
-              Padding(padding: EdgeInsets.only(bottom: 800 * 0.5 * 0.05)),
+              const Padding(padding: EdgeInsets.only(bottom: 800 * 0.5 * 0.05)),
               for (var i in appState.list.reversed) ...[
                 Card(
                   child: ListTile(

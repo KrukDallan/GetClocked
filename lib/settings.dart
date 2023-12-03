@@ -6,28 +6,30 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var colorScheme = Theme.of(context).colorScheme;
-    return Scaffold(
-      backgroundColor: colorScheme.primary,
-      body: SingleChildScrollView(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Padding(padding: EdgeInsets.all(14)),
-              SizedBox(
-                  child: Center(
-                      child: Text('Settings',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                              color: colorScheme.onSecondary)))),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text('Sample text'),
-                ],
-              )
-            ]),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: colorScheme.primary,
+        body: SingleChildScrollView(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Padding(padding: EdgeInsets.all(8)),
+                Center(
+                    child: Text('Settings',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 24,
+                            color: colorScheme.onSecondary))),
+                const Padding(padding: EdgeInsets.only(bottom: 800 * 0.5 * 0.05)),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text('Sample text'),
+                  ],
+                )
+              ]),
+        ),
       ),
     );
   }
