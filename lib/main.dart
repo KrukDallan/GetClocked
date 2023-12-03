@@ -330,13 +330,13 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           label: 'Annotate',
                         ),
-                        BottomNavigationBarItem(
+                        const BottomNavigationBarItem(
                           icon: Icon(
                             Icons.article,
                           ),
                           label: 'History',
                         ),
-                        BottomNavigationBarItem(
+                        const BottomNavigationBarItem(
                           icon: Icon(
                             Icons.settings,
                           ),
@@ -479,7 +479,7 @@ class AnnotatePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(padding: EdgeInsets.only(right: 480 * 0.5 * 0.4)),
+                const Padding(padding: EdgeInsets.only(right: 480 * 0.5 * 0.4)),
                 SizedBox(
                   width: 480 * 0.5 * 0.55,
                   height: 800 * 0.5 * 0.25,
@@ -510,7 +510,7 @@ class AnnotatePage extends StatelessWidget {
                 ),
               ],
             ),
-            Padding(padding: EdgeInsets.all(30)),
+            const Padding(padding: EdgeInsets.all(30)),
             ElevatedButton(
                 child: Text(
                   'Clear All',
@@ -537,14 +537,14 @@ class AnnotatePage extends StatelessWidget {
                                 child: const Text('Yes!'),
                               ),
                             ]))),
-            Expanded(
+            const Expanded(
               child: Text(''),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                       right: 480 * 0.1, bottom: 800 * 0.5 * 0.1),
                   child: ElevatedButton(
                       style: ButtonStyle(
@@ -559,7 +559,7 @@ class AnnotatePage extends StatelessWidget {
                             : MyApp.of(context).changeTheme(ThemeMode.dark);
                       },
                       child: (darkMode)
-                          ? Icon(
+                          ? const Icon(
                               Icons.brightness_2,
                               color: Colors.white,
                             )
@@ -617,7 +617,7 @@ class HistoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     //Duration workHours = sharedOvertime;
-    Duration workHours = Duration(hours: 8, minutes: 45);
+    Duration workHours = const Duration(hours: 8, minutes: 45);
     var colorScheme = Theme.of(context).colorScheme;
 
     var dates = <String>[];
