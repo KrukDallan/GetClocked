@@ -75,19 +75,19 @@ class _MyAppState extends State<MyApp> {
     return ChangeNotifierProvider(
         create: (context) => MyAppState(),
         child: MaterialApp(
-          title: 'Xtra',
+          title: 'GetClocked',
           theme: ThemeData(
               useMaterial3: true,
               colorScheme: const ColorScheme(
                   brightness: Brightness.light,
                   primary: Color.fromARGB(255, 154, 237, 243),
-                  onPrimary: Colors.white,
-                  secondary: Colors.black,
+                  onPrimary: Colors.black,
+                  secondary: Colors.white,
                   onSecondary: Colors.black,
                   tertiary: Colors.blue,
                   onTertiary: Colors.white,
-                  error: Colors.red,
-                  onError: Colors.black,
+                  error: Colors.black,
+                  onError: Colors.red,
                   background: Colors.white,
                   onBackground: Colors.black,
                   surface: Colors.white,
@@ -98,18 +98,18 @@ class _MyAppState extends State<MyApp> {
                   brightness: Brightness.dark,
                   primary: Colors.black,
                   onPrimary: Colors.white,
-                  secondary: Colors.white,
-                  onSecondary: Color.fromARGB(255, 29, 28, 28),
-                  tertiary: Colors.white,
+                  secondary: Color.fromARGB(255, 29, 28, 28),
+                  onSecondary: Colors.white,
+                  tertiary: Color.fromARGB(255, 29, 28, 28),
                   onTertiary: Colors.white,
-                  error: Colors.red,
-                  onError: Colors.black,
-                  background: Colors.white,
-                  onBackground: Colors.black,
+                  error: Color.fromARGB(255, 29, 28, 28),
+                  onError: Colors.red,
+                  background: Colors.black,
+                  onBackground: Colors.white,
                   surface: Color.fromARGB(255, 53, 52, 54),
-                  onSurface: Colors.black)),
+                  onSurface: Colors.white)),
           themeMode: _themeMode,
-          home: const MyHomePage(title: 'Xtra'),
+          home: const MyHomePage(title: 'GetClocked'),
         ));
   }
 
@@ -293,11 +293,11 @@ class _MyHomePageState extends State<MyHomePage> {
       case 2: 
         page = SettingsPage();
       default:
-        throw UnimplementedError('no widget for $selectedIndex');
+        page = Container(child: Text('UnimplementedError(no widget for $selectedIndex)'));
     }
 
     var mainArea = ColoredBox(
-      color: colorScheme.surfaceVariant,
+      color: colorScheme.surface,
       child: AnimatedSwitcher(
         duration: Duration(milliseconds: 200),
         child: page,
@@ -349,28 +349,29 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 SafeArea(
                   child: NavigationRail(
+                    backgroundColor: colorScheme.surface,
                     extended: constraints.maxWidth >= 700,
                     indicatorColor: colorScheme.tertiary,
                     destinations: [
                       NavigationRailDestination(
                         icon: Icon(
                           Icons.access_time_filled,
+                          color: colorScheme.onSecondary
                         ),
-                        indicatorColor: Colors.teal,
                         label: Text(
                           'Annotate',
-                          style: TextStyle(color: colorScheme.tertiary),
+                          style: TextStyle(color: colorScheme.onSecondary),
                         ),
                       ),
                       NavigationRailDestination(
                         icon: Icon(Icons.article),
                         label: Text('History',
-                            style: TextStyle(color: colorScheme.tertiary)),
+                            style: TextStyle(color: colorScheme.onSecondary)),
                       ),
                       NavigationRailDestination(
                         icon: Icon(Icons.settings),
                         label: Text('Settings',
-                            style: TextStyle(color: colorScheme.tertiary)),
+                            style: TextStyle(color: colorScheme.onSecondary)),
                       ),
                     ],
                     selectedIndex: selectedIndex,
@@ -410,7 +411,7 @@ class AnnotatePage extends StatelessWidget {
     }
 
     return Container(
-      decoration: BoxDecoration(color: colorScheme.primaryContainer),
+      decoration: BoxDecoration(color: colorScheme.primary),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -421,7 +422,8 @@ class AnnotatePage extends StatelessWidget {
                 "Welcome!",
                 textScaler: TextScaler.linear(1.5),
                 style: TextStyle(
-                    fontWeight: FontWeight.w500, color: colorScheme.secondary),
+                    fontWeight: FontWeight.w500, 
+                    color: colorScheme.onSecondary),
               ),
             ),
             Padding(padding: EdgeInsets.only(bottom: 480 * 0.5 * 0.4)),
@@ -456,13 +458,13 @@ class AnnotatePage extends StatelessWidget {
                     },
                     icon: Icon(
                       Icons.add_alarm_outlined,
-                      color: colorScheme.secondary,
+                      color: colorScheme.onSecondary,
                     ),
                     label: Text(
                       'Check in',
                       style: TextStyle(
                         fontSize: 11,
-                        color: colorScheme.secondary,
+                        color: colorScheme.onSecondary,
                       ),
                     ),
                   ),
@@ -488,11 +490,11 @@ class AnnotatePage extends StatelessWidget {
                       }
                     },
                     icon: Icon(Icons.assignment_turned_in_outlined,
-                        color: colorScheme.secondary),
+                        color: colorScheme.onSecondary),
                     label: Text(
                       'Check out',
                       style:
-                          TextStyle(fontSize: 11, color: colorScheme.secondary),
+                          TextStyle(fontSize: 11, color: colorScheme.onSecondary),
                     ),
                   ),
                 ),
@@ -502,7 +504,7 @@ class AnnotatePage extends StatelessWidget {
             ElevatedButton(
                 child: Text(
                   'Clear All',
-                  style: TextStyle(color: colorScheme.secondary),
+                  style: TextStyle(color: colorScheme.onSecondary),
                 ),
                 onPressed: () => showDialog(
                     context: context,
@@ -691,7 +693,7 @@ class HistoryPage extends StatelessWidget {
                     fontSize: 16.0,
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.w500,
-                    color: colorScheme.secondary),
+                    color: colorScheme.onSecondary),
               ),
             ),
             Padding(padding: EdgeInsets.only(bottom: 800 * 0.5 * 0.05)),
@@ -700,16 +702,16 @@ class HistoryPage extends StatelessWidget {
                 child: ListTile(
                   title: Text(
                     dates[appState.list.indexOf(i)],
-                    style: TextStyle(color: colorScheme.secondary),
+                    style: TextStyle(color: colorScheme.onSecondary),
                   ),
                   subtitle: (!appState.checks[appState.list.indexOf(i)])
                       ? Text(
                           "${appState.parseForHours(appState.formatTime(DateTime.parse(i.$1)))} || ",
-                          style: TextStyle(color: colorScheme.secondary),
+                          style: TextStyle(color: colorScheme.onSecondary),
                         )
                       : Text(
                           "${appState.parseForHours(appState.formatTime(DateTime.parse(i.$1)))} || ${appState.parseForHours(appState.formatTime(DateTime.parse(i.$2)))}",
-                          style: TextStyle(color: colorScheme.secondary),
+                          style: TextStyle(color: colorScheme.onSecondary),
                         ),
                   trailing: (appState.checkOuts[appState.checkOuts
                                   .indexOf(DateTime.parse(i.$2))]
@@ -718,12 +720,12 @@ class HistoryPage extends StatelessWidget {
                               .compareTo(workHours) >
                           0)
                       ? Text(
-                          "Xtra: ${appState.parseUntilSeconds((appState.checkOuts[appState.checkOuts.indexOf(DateTime.parse(i.$2))].difference(appState.checkIns[appState.checkIns.indexOf(DateTime.parse(i.$1))])).toString())}",
-                          style: TextStyle(color: colorScheme.secondary),
+                          "Overtime: ${appState.parseUntilSeconds((appState.checkOuts[appState.checkOuts.indexOf(DateTime.parse(i.$2))].difference(appState.checkIns[appState.checkIns.indexOf(DateTime.parse(i.$1))])).toString())}",
+                          style: TextStyle(color: colorScheme.onSecondary),
                         )
                       : Text(
-                          "Xtra: 00:00:00",
-                          style: TextStyle(color: colorScheme.secondary),
+                          "Overtime: 00:00:00",
+                          style: TextStyle(color: colorScheme.onSecondary),
                         ),
                 ),
               )

@@ -16,8 +16,12 @@ class SettingsPage extends StatelessWidget{
   Widget build(BuildContext context) {
     var colorScheme = Theme.of(context).colorScheme;
     return Container(
-      decoration: BoxDecoration(color: colorScheme.primaryContainer),
+      decoration: BoxDecoration(color: colorScheme.primary),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text('Lmaooo')
+        ]
       ),
     );
   }
