@@ -1,26 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:getclocked/workhour.dart';
-import 'package:getclocked/boxes.dart';
-import 'package:getclocked/shared.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:numberpicker/numberpicker.dart';
 
 
 
 class SettingsPage extends StatelessWidget{
+  const SettingsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     var colorScheme = Theme.of(context).colorScheme;
     return Container(
       decoration: BoxDecoration(color: colorScheme.primary),
-      child: Column(
+      child:  Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text('Lmaooo')
+        children:  [
+          const Padding(padding: EdgeInsets.all(16)),
+          SizedBox(
+            child: Text('Settings',textScaler: const TextScaler.linear(1.5),
+                style: TextStyle(
+                    fontWeight: FontWeight.w500, 
+                    color: colorScheme.onSecondary))
+          ),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text('Sample text'),
+            ],
+          )
         ]
       ),
     );

@@ -19,7 +19,8 @@ var boxList = <(String, String)>[];
 
 bool darkMode = false;
 
-dynamic sharedOvertime = Duration(hours: 0, minutes: 0);
+Duration sharedOvertime = const Duration(hours: 0, minutes: 0); // delete
+
 bool showAlertDialogOvertime = false;
 
 void main() async {
@@ -56,13 +57,16 @@ void main() async {
 
   (ThemeMode.system == ThemeMode.light) ? darkMode = false : darkMode = true;
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
   State<MyApp> createState() => _MyAppState();
 
+// Needed for light/dark theme
   static _MyAppState of(BuildContext context) =>
       context.findAncestorStateOfType<_MyAppState>()!;
 }
@@ -70,6 +74,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   ThemeMode _themeMode = ThemeMode.system;
+  
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -287,11 +292,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
     switch (selectedIndex) {
       case 0:
-        page = AnnotatePage();
+        page = const AnnotatePage();
       case 1:
         page = HistoryPage();
       case 2: 
-        page = SettingsPage();
+        page = const SettingsPage();
       default:
         page = Container(child: Text('UnimplementedError(no widget for $selectedIndex)'));
     }
@@ -299,7 +304,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var mainArea = ColoredBox(
       color: colorScheme.surface,
       child: AnimatedSwitcher(
-        duration: Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 200),
         child: page,
       ),
     );
@@ -314,8 +319,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 SafeArea(
                   child: BottomNavigationBar(
                       unselectedItemColor: colorScheme.secondary,
-                      selectedItemColor: colorScheme.tertiary,
-                      items: [
+                      selectedItemColor: colorScheme.primary,
+                      items: const [
                         BottomNavigationBarItem(
                           icon: Icon(
                             Icons.access_time_filled,
@@ -351,7 +356,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: NavigationRail(
                     backgroundColor: colorScheme.surface,
                     extended: constraints.maxWidth >= 700,
-                    indicatorColor: colorScheme.tertiary,
+                    indicatorColor: colorScheme.primary,
                     destinations: [
                       NavigationRailDestination(
                         icon: Icon(
@@ -364,12 +369,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       NavigationRailDestination(
-                        icon: Icon(Icons.article),
+                        icon: const Icon(Icons.article),
                         label: Text('History',
                             style: TextStyle(color: colorScheme.onSecondary)),
                       ),
                       NavigationRailDestination(
-                        icon: Icon(Icons.settings),
+                        icon: const Icon(Icons.settings),
                         label: Text('Settings',
                             style: TextStyle(color: colorScheme.onSecondary)),
                       ),
@@ -393,6 +398,8 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class AnnotatePage extends StatelessWidget {
+  const AnnotatePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
@@ -416,17 +423,17 @@ class AnnotatePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(padding: EdgeInsets.only(top: 800 * 0.5 * 0.2)),
+            const Padding(padding: EdgeInsets.only(top: 800 * 0.5 * 0.2, bottom: 14, left: 14, right: 14)),
             SizedBox(
               child: Text(
                 "Welcome!",
-                textScaler: TextScaler.linear(1.5),
+                textScaler: const TextScaler.linear(1.5),
                 style: TextStyle(
                     fontWeight: FontWeight.w500, 
                     color: colorScheme.onSecondary),
               ),
             ),
-            Padding(padding: EdgeInsets.only(bottom: 480 * 0.5 * 0.4)),
+            const Padding(padding: EdgeInsets.only(bottom: 480 * 0.5 * 0.4)),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -661,6 +668,8 @@ class AnnotatePage extends StatelessWidget {
 }
 
 class HistoryPage extends StatelessWidget {
+  const HistoryPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
