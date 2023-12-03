@@ -294,11 +294,11 @@ class _MyHomePageState extends State<MyHomePage> {
       case 0:
         page = const AnnotatePage();
       case 1:
-        page = HistoryPage();
+        page = const HistoryPage();
       case 2: 
         page = const SettingsPage();
       default:
-        page = Container(child: Text('UnimplementedError(no widget for $selectedIndex)'));
+        page = Text('UnimplementedError(no widget for $selectedIndex)');
     }
 
     var mainArea = ColoredBox(
@@ -318,12 +318,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 Expanded(child: mainArea),
                 SafeArea(
                   child: BottomNavigationBar(
-                      unselectedItemColor: colorScheme.secondary,
-                      selectedItemColor: colorScheme.primary,
-                      items: const [
+                      unselectedItemColor: colorScheme.onPrimary,
+                      selectedItemColor: colorScheme.onPrimary,
+                      backgroundColor: colorScheme.secondary,
+                      items: [
                         BottomNavigationBarItem(
+                          backgroundColor: colorScheme.secondary,
                           icon: Icon(
                             Icons.access_time_filled,
+                            color: colorScheme.onPrimary,
                           ),
                           label: 'Annotate',
                         ),
@@ -685,61 +688,60 @@ class HistoryPage extends StatelessWidget {
     }
 
     return SafeArea(
-      child: Container(
-        decoration: BoxDecoration(
-          color: colorScheme.primaryContainer,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(padding: EdgeInsets.only(top: 10)),
-            Center(
-              child: Text(
-                'Your annotations',
-                style: TextStyle(
-                    fontSize: 16.0,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500,
-                    color: colorScheme.onSecondary),
-              ),
-            ),
-            Padding(padding: EdgeInsets.only(bottom: 800 * 0.5 * 0.05)),
-            for (var i in appState.list.reversed) ...[
-              Card(
-                child: ListTile(
-                  title: Text(
-                    dates[appState.list.indexOf(i)],
-                    style: TextStyle(color: colorScheme.onSecondary),
-                  ),
-                  subtitle: (!appState.checks[appState.list.indexOf(i)])
-                      ? Text(
-                          "${appState.parseForHours(appState.formatTime(DateTime.parse(i.$1)))} || ",
-                          style: TextStyle(color: colorScheme.onSecondary),
-                        )
-                      : Text(
-                          "${appState.parseForHours(appState.formatTime(DateTime.parse(i.$1)))} || ${appState.parseForHours(appState.formatTime(DateTime.parse(i.$2)))}",
-                          style: TextStyle(color: colorScheme.onSecondary),
-                        ),
-                  trailing: (appState.checkOuts[appState.checkOuts
-                                  .indexOf(DateTime.parse(i.$2))]
-                              .difference(appState.checkIns[appState.checkIns
-                                  .indexOf(DateTime.parse(i.$1))])
-                              .compareTo(workHours) >
-                          0)
-                      ? Text(
-                          "Overtime: ${appState.parseUntilSeconds((appState.checkOuts[appState.checkOuts.indexOf(DateTime.parse(i.$2))].difference(appState.checkIns[appState.checkIns.indexOf(DateTime.parse(i.$1))])).toString())}",
-                          style: TextStyle(color: colorScheme.onSecondary),
-                        )
-                      : Text(
-                          "Overtime: 00:00:00",
-                          style: TextStyle(color: colorScheme.onSecondary),
-                        ),
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Padding(padding: EdgeInsets.only(top: 14)),
+              Center(
+                child: Text(
+                  'Your annotations',
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w500,
+                      color: colorScheme.onSecondary),
                 ),
-              )
-            ]
-          ],
+              ),
+              Padding(padding: EdgeInsets.only(bottom: 800 * 0.5 * 0.05)),
+              for (var i in appState.list.reversed) ...[
+                Card(
+                  child: ListTile(
+                    title: Text(
+                      dates[appState.list.indexOf(i)],
+                      style: TextStyle(color: colorScheme.onSecondary),
+                    ),
+                    subtitle: (!appState.checks[appState.list.indexOf(i)])
+                        ? Text(
+                            "${appState.parseForHours(appState.formatTime(DateTime.parse(i.$1)))} || ",
+                            style: TextStyle(color: colorScheme.onSecondary),
+                          )
+                        : Text(
+                            "${appState.parseForHours(appState.formatTime(DateTime.parse(i.$1)))} || ${appState.parseForHours(appState.formatTime(DateTime.parse(i.$2)))}",
+                            style: TextStyle(color: colorScheme.onSecondary),
+                          ),
+                    trailing: (appState.checkOuts[appState.checkOuts
+                                    .indexOf(DateTime.parse(i.$2))]
+                                .difference(appState.checkIns[appState.checkIns
+                                    .indexOf(DateTime.parse(i.$1))])
+                                .compareTo(workHours) >
+                            0)
+                        ? Text(
+                            "Overtime: ${appState.parseUntilSeconds((appState.checkOuts[appState.checkOuts.indexOf(DateTime.parse(i.$2))].difference(appState.checkIns[appState.checkIns.indexOf(DateTime.parse(i.$1))])).toString())}",
+                            style: TextStyle(color: colorScheme.onSecondary),
+                          )
+                        : Text(
+                            "Overtime: 00:00:00",
+                            style: TextStyle(color: colorScheme.onSecondary),
+                          ),
+                  ),
+                )
+              ]
+            ],
+          ),
         ),
       ),
     );
