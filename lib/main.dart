@@ -8,6 +8,7 @@ import 'package:getclocked/boxes.dart';
 import 'package:getclocked/shared.dart';
 import 'package:getclocked/settings.dart';
 import 'package:getclocked/hivesettings.dart';
+import 'package:getclocked/customtime.dart';
 
 // TODO: LinkedHashMap or Set instead of List
 
@@ -15,10 +16,6 @@ var boxCheckIns = <DateTime>[];
 var boxCheckOuts = <DateTime>[];
 var boxBools = <bool>[];
 var boxList = <(String, String)>[];
-
-bool darkMode = false;
-
-Duration sharedOvertime = const Duration(hours: 0, minutes: 0); // delete
 
 bool showAlertDialogOvertime = false;
 
@@ -32,10 +29,10 @@ void main() async {
   await Hive.initFlutter();
 
   Hive.registerAdapter(WorkHourAdapter());
+  Hive.registerAdapter(HiveSettingsAdapter());
+  Hive.registerAdapter(CustomTimeAdapter());
 
   boxWorkHours = await Hive.openBox<WorkHour>('workHour');
-
-  boxSettings = await Hive.openBox<HiveSettings>('settings');
 
   if (boxWorkHours.length > 0) {
     for (int i = 0; i < boxWorkHours.length; i++) {
@@ -46,17 +43,16 @@ void main() async {
       boxList.add((wh.checkIn.toString(), wh.checkOut.toString()));
     }
   }
-  /* if(prefs.getString('setOvertime') == null ){
-    showAlertDialogOvertime = true;
-    //await prefs.setString('setOvertime', sharedOvertime.toString());
-  }
-  else {
-    showAlertDialogOvertime = false;
-    //DateTime tmp = DateTime.parse(prefs.getString('setOvertime').toString());
-    //sharedOvertime = tmp.difference(DateTime(0));
-  } */
 
-  (ThemeMode.system == ThemeMode.light) ? darkMode = false : darkMode = true;
+  boxSettings = await Hive.openBox<HiveSettings>('settings');
+
+  if (boxSettings.length == 0){
+    CustomTime ct = CustomTime(hour: 8, minute: 45);
+    HiveSettings hs = HiveSettings(darkTheme: true, workhours: ct);
+    boxSettings.put(0, hs);
+  }
+
+  //(ThemeMode.system == ThemeMode.light) ? darkMode = false : darkMode = true;
 
   runApp(const MyApp());
 }
@@ -75,7 +71,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   ThemeMode _themeMode = ThemeMode.system;
-  
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -122,7 +118,7 @@ class _MyAppState extends State<MyApp> {
   void changeTheme(ThemeMode themeMode) {
     setState(() {
       _themeMode = themeMode;
-      darkMode = !darkMode;
+      //darkMode = !darkMode;
     });
   }
 }
@@ -296,7 +292,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = const AnnotatePage();
       case 1:
         page = const HistoryPage();
-      case 2: 
+      case 2:
         page = const SettingsPage();
       default:
         page = Text('UnimplementedError(no widget for $selectedIndex)');
@@ -363,10 +359,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     indicatorColor: colorScheme.primary,
                     destinations: [
                       NavigationRailDestination(
-                        icon: Icon(
-                          Icons.access_time_filled,
-                          color: colorScheme.onSecondary
-                        ),
+                        icon: Icon(Icons.access_time_filled,
+                            color: colorScheme.onSecondary),
                         label: Text(
                           'Annotate',
                           style: TextStyle(color: colorScheme.onSecondary),
@@ -427,12 +421,14 @@ class AnnotatePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Padding(padding: EdgeInsets.only(top: 800 * 0.5 * 0.2, bottom: 14, left: 14, right: 14)),
+            const Padding(
+                padding: EdgeInsets.only(
+                    top: 800 * 0.5 * 0.2, bottom: 14, left: 14, right: 14)),
             SizedBox(
               child: Text(
                 "Welcome!",
                 style: TextStyle(
-                    fontWeight: FontWeight.w500, 
+                    fontWeight: FontWeight.w500,
                     color: colorScheme.onSecondary,
                     fontSize: 24),
               ),
@@ -504,8 +500,8 @@ class AnnotatePage extends StatelessWidget {
                         color: colorScheme.onSecondary),
                     label: Text(
                       'Check out',
-                      style:
-                          TextStyle(fontSize: 11, color: colorScheme.onSecondary),
+                      style: TextStyle(
+                          fontSize: 11, color: colorScheme.onSecondary),
                     ),
                   ),
                 ),
@@ -540,69 +536,6 @@ class AnnotatePage extends StatelessWidget {
                             ]))),
             const Expanded(
               child: Text(''),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                      right: 480 * 0.1, bottom: 800 * 0.5 * 0.1),
-                  child: ElevatedButton(
-                      style: ButtonStyle(
-                        elevation:
-                            MaterialStateProperty.resolveWith((states) => 10),
-                        shadowColor: MaterialStateColor.resolveWith(
-                            (states) => Colors.white),
-                      ),
-                      onPressed: () {
-                        (darkMode)
-                            ? MyApp.of(context).changeTheme(ThemeMode.light)
-                            : MyApp.of(context).changeTheme(ThemeMode.dark);
-                      },
-                      child: (darkMode)
-                          ? const Icon(
-                              Icons.brightness_2,
-                              color: Colors.white,
-                            )
-                          : Icon(Icons.brightness_4,
-                              color: colorScheme.tertiary)),
-                ),
-                /*Padding(
-                  padding:
-                      EdgeInsets.only(right: 480 * 0.1, bottom: 800 * 0.5 * 0.1),
-                  child: ElevatedButton(
-                      style: ButtonStyle(
-                        elevation:
-                            MaterialStateProperty.resolveWith((states) => 10),
-                        shadowColor: MaterialStateColor.resolveWith(
-                            (states) => Colors.white),
-                      ),
-                      onPressed: () => showDialog(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                            backgroundColor: colorScheme.tertiary,
-                            title: const Text('Settings'),
-                            content: const Text(
-                                'Type your work hours in the format xx:xx'),
-                            actions: <Widget>[ 
-                              TextField(
-                                controller: myController,
-                              ),
-                              TextButton(
-                                onPressed: () => { 
-                                Navigator.pop(context, 'Confirm'),
-                                },
-                                child: const Text('Confirm')),
-                              TextButton(
-                                onPressed: () => { 
-                                Navigator.pop(context, 'Cancel'),
-                                },
-                                child: const Text('Cancel')),
-                            ])), 
-                      child: Icon(Icons.settings,
-                      color: colorScheme.secondary,)),
-                ),*/
-              ],
             ),
           ],
         ),

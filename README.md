@@ -12,6 +12,7 @@ To compile the project:
 
 - Proper settings
 - Possibility to interrupt the work hours for lunch or other reasons
+- Appbar for pages title
 
 ## Broken
 
