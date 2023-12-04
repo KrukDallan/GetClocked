@@ -46,15 +46,20 @@ void main() async {
 
   boxSettings = await Hive.openBox<HiveSettings>('settings');
 
-  if (boxSettings.length == 0){
+/*   if (boxSettings.length == 0){
     CustomTime ct = CustomTime(hour: 8, minute: 45);
     HiveSettings hs = HiveSettings(darkTheme: true, workhours: ct);
     boxSettings.put(0, hs);
-  }
+  } */
+  // temporarily disable the box
+  boxSettings.clear();
+  
 
   //(ThemeMode.system == ThemeMode.light) ? darkMode = false : darkMode = true;
 
   runApp(const MyApp());
+
+
 }
 
 class MyApp extends StatefulWidget {
@@ -259,7 +264,8 @@ class MyAppState extends ChangeNotifier {
       content: Center(child: Text(msg)),
       duration: const Duration(milliseconds: 1200),
       behavior: SnackBarBehavior.floating,
-      width: 300.0, // Width of the SnackBar.
+      margin: const EdgeInsets.only(bottom: 60),
+      //width: 300.0, // Width of the SnackBar.
       padding: const EdgeInsets.all(15),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
