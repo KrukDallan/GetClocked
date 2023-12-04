@@ -476,7 +476,7 @@ class AnnotatePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(right: 480 * 0.5 * 0.4)),
+                const Padding(padding: EdgeInsets.only(right: 480 * 0.5 * 0.2)),
                 SizedBox(
                   width: 480 * 0.5 * 0.55,
                   height: 800 * 0.5 * 0.25,
@@ -516,22 +516,22 @@ class AnnotatePage extends StatelessWidget {
                 onPressed: () => showDialog(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
-                            backgroundColor: colorScheme.tertiary,
+                            backgroundColor: colorScheme.secondary,
                             title: const Text('Warning!'),
                             content: const Text(
-                                'Do you really wish to delete all your annotations?'),
+                                'Do you really wish to delete every annotations?'),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () =>
                                     Navigator.pop(context, 'Cancel'),
-                                child: const Text('Cancel'),
+                                child: Text('Cancel', style: TextStyle(color: colorScheme.onPrimary),),
                               ),
                               TextButton(
                                 onPressed: () => {
                                   appState.clearAll(),
                                   Navigator.pop(context, 'Yes!')
                                 },
-                                child: const Text('Yes!'),
+                                child: Text('Yes!',style: TextStyle(color: colorScheme.onPrimary)),
                               ),
                             ]))),
             const Expanded(
