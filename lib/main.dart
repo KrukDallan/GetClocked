@@ -588,15 +588,19 @@ class HistoryPage extends StatelessWidget {
                       dates[appState.list.indexOf(i)],
                       style: TextStyle(color: colorScheme.onSecondary),
                     ),
+                    // Start and end time
                     subtitle: (!appState.checks[appState.list.indexOf(i)])
                         ? Text(
-                            "${appState.parseForHours(appState.formatTime(DateTime.parse(i.$1)))} || ",
-                            style: TextStyle(color: colorScheme.onSecondary),
+                            "Start: ${appState.parseForHours(appState.formatTime(DateTime.parse(i.$1)))} | End: ",
+                            style: TextStyle(color: colorScheme.onSecondary,
+                            fontSize: 11.0),
                           )
                         : Text(
-                            "${appState.parseForHours(appState.formatTime(DateTime.parse(i.$1)))} || ${appState.parseForHours(appState.formatTime(DateTime.parse(i.$2)))}",
-                            style: TextStyle(color: colorScheme.onSecondary),
+                            "Start: ${appState.parseForHours(appState.formatTime(DateTime.parse(i.$1)))} | End: ${appState.parseForHours(appState.formatTime(DateTime.parse(i.$2)))}",
+                            style: TextStyle(color: colorScheme.onSecondary,
+                            fontSize: 11.0),
                           ),
+                          // Overtime
                     trailing: (appState.checkOuts[appState.checkOuts
                                     .indexOf(DateTime.parse(i.$2))]
                                 .difference(appState.checkIns[appState.checkIns
