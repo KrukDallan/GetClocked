@@ -108,7 +108,7 @@ class _MyAppState extends State<MyApp> {
                   onError: Colors.red,
                   background: Colors.black,
                   onBackground: Colors.white,
-                  surface: Color.fromARGB(255, 53, 52, 54),
+                  surface: Color.fromARGB(255, 53, 51, 55),
                   onSurface: Colors.white)),
           themeMode: _themeMode,
           home: const MyHomePage(title: 'GetClocked'),
@@ -508,7 +508,7 @@ class AnnotatePage extends StatelessWidget {
               ],
             ),
             const Padding(padding: EdgeInsets.all(30)),
-            ElevatedButton(
+            /* ElevatedButton(
                 child: Text(
                   'Clear All',
                   style: TextStyle(color: colorScheme.onSecondary),
@@ -533,7 +533,7 @@ class AnnotatePage extends StatelessWidget {
                                 },
                                 child: Text('Yes!',style: TextStyle(color: colorScheme.onPrimary)),
                               ),
-                            ]))),
+                            ]))), */
             const Expanded(
               child: Text(''),
             ),
