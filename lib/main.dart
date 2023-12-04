@@ -299,7 +299,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     var mainArea = ColoredBox(
-      color: colorScheme.surface,
+      color: colorScheme.primary,
       child: AnimatedSwitcher(
         duration: const Duration(milliseconds: 200),
         child: page,
@@ -313,8 +313,7 @@ class _MyHomePageState extends State<MyHomePage> {
             return Column(
               children: [
                 Expanded(child: mainArea),
-                SafeArea(
-                  child: BottomNavigationBar(
+                 BottomNavigationBar(
                       unselectedItemColor: colorScheme.onPrimary,
                       selectedItemColor: colorScheme.onPrimary,
                       backgroundColor: colorScheme.secondary,
@@ -346,7 +345,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           selectedIndex = value;
                         });
                       }),
-                ),
               ],
             );
           } else {
