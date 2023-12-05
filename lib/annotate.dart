@@ -115,18 +115,18 @@ class AnnotatePage extends StatelessWidget {
               ],
             ),
             const Padding(padding: EdgeInsets.all(30)),
-            /* ElevatedButton(
+            ElevatedButton(
                 child: Text(
-                  'Clear All',
+                  'Pause clock',
                   style: TextStyle(color: colorScheme.onSecondary),
                 ),
                 onPressed: () => showDialog(
                     context: context,
                     builder: (BuildContext context) => AlertDialog(
                             backgroundColor: colorScheme.secondary,
-                            title: const Text('Warning!'),
+                            title: const Text('Pause clock'),
                             content: const Text(
-                                'Do you really wish to delete every annotations?'),
+                                'Do you really wish to pause the clock?'),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () =>
@@ -135,12 +135,12 @@ class AnnotatePage extends StatelessWidget {
                               ),
                               TextButton(
                                 onPressed: () => {
-                                  appState.clearAll(),
+                                  // TODO: implement the 'stop clock' functionality
                                   Navigator.pop(context, 'Yes!')
                                 },
                                 child: Text('Yes!',style: TextStyle(color: colorScheme.onPrimary)),
                               ),
-                            ]))), */
+                            ]))), 
             const Expanded(
               child: Text(''),
             ),

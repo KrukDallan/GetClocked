@@ -50,7 +50,7 @@ class HistoryPage extends StatelessWidget {
                       context: context,
                       builder: (BuildContext context) => AlertDialog(
                               backgroundColor: colorScheme.secondary,
-                              title: const Text('Delete annotation?'),
+                              title: const Text('Delete annotation'),
                               content: const Text(
                                   'Do you really wish to delete this annotation?'),
                               actions: <Widget>[

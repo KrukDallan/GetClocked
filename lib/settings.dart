@@ -79,6 +79,72 @@ class SettingsPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             const Padding(padding: EdgeInsets.only(left: 4)),
+                            const Icon(Icons.access_time_filled),
+                            const Padding(padding: EdgeInsets.only(left: 8)),
+                            const Text('Change work hours'),
+                            const Expanded(
+                              child: Text(''),
+                            ),
+                            ElevatedButton(
+                                style: ButtonStyle(
+                                  shadowColor: MaterialStateColor.resolveWith(
+                                      (states) => colorScheme.onPrimary),
+                                  elevation: MaterialStateProperty.resolveWith(
+                                      (states) => 2.0),
+                                  backgroundColor:
+                                      MaterialStateColor.resolveWith(
+                                          (states) => colorScheme.surface),
+                                ),
+                                onPressed: () => showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                            backgroundColor:
+                                                colorScheme.secondary,
+                                            title: const Text('Change work hours'),
+                                            content: const Text(
+                                                'Select the new working hours'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    context, 'Cancel'),
+                                                child: Text(
+                                                  'Cancel',
+                                                  style: TextStyle(
+                                                      color: colorScheme
+                                                          .onPrimary),
+                                                ),
+                                              ),
+                                              TextButton(
+                                                onPressed: () => {
+                                                  // TODO: display a time picker and store the
+                                                  // chosen time in the database.
+                                                  Navigator.pop(context, 'Yes!')
+                                                },
+                                                child: Text('Yes!',
+                                                    style: TextStyle(
+                                                        color: colorScheme
+                                                            .onPrimary)),
+                                              ),
+                                            ])),
+                                child: Icon(
+                                  Icons.change_circle_outlined,
+                                  color: colorScheme.onPrimary,
+                                ))
+                          ],
+                        ),
+                      ),
+                      const Divider(
+                        thickness: 0.2,
+                        indent: 12.0,
+                        endIndent: 12.0,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Padding(padding: EdgeInsets.only(left: 4)),
                             const Icon(Icons.delete_forever),
                             const Padding(padding: EdgeInsets.only(left: 8)),
                             const Text('Delete all annotations'),
