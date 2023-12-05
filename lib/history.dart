@@ -32,7 +32,7 @@ class HistoryPage extends StatelessWidget {
                 child: Text(
                   'Your annotations',
                   style: TextStyle(
-                      fontSize: 24.0,
+                      fontSize: 20.0,
                       fontStyle: FontStyle.normal,
                       fontWeight: FontWeight.w500,
                       color: colorScheme.onSecondary),
@@ -40,39 +40,76 @@ class HistoryPage extends StatelessWidget {
               ),
               const Padding(padding: EdgeInsets.only(bottom: 800 * 0.5 * 0.05)),
               for (var i in appState.list.reversed) ...[
-                Card(
-                  child: ListTile(
-                    title: Text(
-                      dates[appState.list.indexOf(i)],
-                      style: TextStyle(color: colorScheme.onSecondary),
+                TextButton(
+                  style: ButtonStyle(
+                    elevation: MaterialStateProperty.resolveWith((states) => 0.0),
+                    padding: MaterialStateProperty.resolveWith((states) => const EdgeInsets.all(0)),
+                  ),
+                  onPressed: () {},
+                  onLongPress: () => showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                              backgroundColor: colorScheme.secondary,
+                              title: const Text('Delete annotation?'),
+                              content: const Text(
+                                  'Do you really wish to delete this annotation?'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, 'Cancel'),
+                                  child: Text(
+                                    'Cancel',
+                                    style:
+                                        TextStyle(color: colorScheme.onPrimary),
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: () => {
+                                    appState.removeListElement(i),
+                                    Navigator.pop(context, 'Yes!')
+                                  },
+                                  child: Text('Yes!',
+                                      style: TextStyle(
+                                          color: colorScheme.onPrimary)),
+                                ),
+                              ])),
+                  child: Card(
+                    child: ListTile(
+                      title: Text(
+                        dates[appState.list.indexOf(i)],
+                        style: TextStyle(color: colorScheme.onSecondary),
+                      ),
+                      // Start and end time
+                      subtitle: (!appState.checks[appState.list.indexOf(i)])
+                          ? Text(
+                              "Start: ${appState.parseForHours(appState.formatTime(DateTime.parse(i.$1)))} | End: ",
+                              style: TextStyle(
+                                  color: colorScheme.onSecondary,
+                                  fontSize: 11.0),
+                            )
+                          : Text(
+                              "Start: ${appState.parseForHours(appState.formatTime(DateTime.parse(i.$1)))} | End: ${appState.parseForHours(appState.formatTime(DateTime.parse(i.$2)))}",
+                              style: TextStyle(
+                                  color: colorScheme.onSecondary,
+                                  fontSize: 11.0),
+                            ),
+                      // Overtime
+                      trailing: (appState.checkOuts[appState.checkOuts
+                                      .indexOf(DateTime.parse(i.$2))]
+                                  .difference(appState.checkIns[appState
+                                      .checkIns
+                                      .indexOf(DateTime.parse(i.$1))])
+                                  .compareTo(workHours) >
+                              0)
+                          ? Text(
+                              "Overtime: ${appState.parseUntilSeconds((appState.checkOuts[appState.checkOuts.indexOf(DateTime.parse(i.$2))].difference(appState.checkIns[appState.checkIns.indexOf(DateTime.parse(i.$1))])).toString())}",
+                              style: TextStyle(color: colorScheme.onSecondary),
+                            )
+                          : Text(
+                              "Overtime: 00:00:00",
+                              style: TextStyle(color: colorScheme.onSecondary),
+                            ),
                     ),
-                    // Start and end time
-                    subtitle: (!appState.checks[appState.list.indexOf(i)])
-                        ? Text(
-                            "Start: ${appState.parseForHours(appState.formatTime(DateTime.parse(i.$1)))} | End: ",
-                            style: TextStyle(color: colorScheme.onSecondary,
-                            fontSize: 11.0),
-                          )
-                        : Text(
-                            "Start: ${appState.parseForHours(appState.formatTime(DateTime.parse(i.$1)))} | End: ${appState.parseForHours(appState.formatTime(DateTime.parse(i.$2)))}",
-                            style: TextStyle(color: colorScheme.onSecondary,
-                            fontSize: 11.0),
-                          ),
-                          // Overtime
-                    trailing: (appState.checkOuts[appState.checkOuts
-                                    .indexOf(DateTime.parse(i.$2))]
-                                .difference(appState.checkIns[appState.checkIns
-                                    .indexOf(DateTime.parse(i.$1))])
-                                .compareTo(workHours) >
-                            0)
-                        ? Text(
-                            "Overtime: ${appState.parseUntilSeconds((appState.checkOuts[appState.checkOuts.indexOf(DateTime.parse(i.$2))].difference(appState.checkIns[appState.checkIns.indexOf(DateTime.parse(i.$1))])).toString())}",
-                            style: TextStyle(color: colorScheme.onSecondary),
-                          )
-                        : Text(
-                            "Overtime: 00:00:00",
-                            style: TextStyle(color: colorScheme.onSecondary),
-                          ),
                   ),
                 )
               ]

@@ -28,7 +28,7 @@ class SettingsPage extends StatelessWidget {
                     child: Text('Settings',
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
-                            fontSize: 24,
+                            fontSize: 20,
                             color: colorScheme.onSecondary))),
                 const Padding(
                     padding: EdgeInsets.only(bottom: 800 * 0.5 * 0.05)),
