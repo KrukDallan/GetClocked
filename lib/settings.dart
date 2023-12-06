@@ -14,6 +14,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var colorScheme = Theme.of(context).colorScheme;
     var appState = context.watch<MyAppState>();
+    var selectedTime;
 
     return SafeArea(
       child: Scaffold(
@@ -95,38 +96,10 @@ class SettingsPage extends StatelessWidget {
                                       MaterialStateColor.resolveWith(
                                           (states) => colorScheme.surface),
                                 ),
-                                onPressed: () => showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        AlertDialog(
-                                            backgroundColor:
-                                                colorScheme.secondary,
-                                            title: const Text('Change work hours'),
-                                            content: const Text(
-                                                'Select the new working hours'),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    context, 'Cancel'),
-                                                child: Text(
-                                                  'Cancel',
-                                                  style: TextStyle(
-                                                      color: colorScheme
-                                                          .onPrimary),
-                                                ),
-                                              ),
-                                              TextButton(
-                                                onPressed: () => {
-                                                  // TODO: display a time picker and store the
-                                                  // chosen time in the database.
-                                                  Navigator.pop(context, 'Yes!')
-                                                },
-                                                child: Text('Yes!',
-                                                    style: TextStyle(
-                                                        color: colorScheme
-                                                            .onPrimary)),
-                                              ),
-                                            ])),
+                                onPressed: () {selectedTime = showTimePicker(
+                                  context: context, 
+                                  initialTime: const TimeOfDay(hour: 8, minute: 45),
+                                  );},
                                 child: Icon(
                                   Icons.change_circle_outlined,
                                   color: colorScheme.onPrimary,
