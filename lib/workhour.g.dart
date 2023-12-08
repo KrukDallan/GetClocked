@@ -17,8 +17,8 @@ class WorkHourAdapter extends TypeAdapter<WorkHour> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return WorkHour(
-      checkIn: fields[0] as DateTime,
-      checkOut: fields[1] as DateTime,
+      checkIn: fields[0] as TimeOfDay,
+      checkOut: fields[1] as TimeOfDay,
       listIndex: fields[2] as int,
       check: fields[4] as bool,
       onlyIn: fields[3] as bool,

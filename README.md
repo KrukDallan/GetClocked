@@ -10,13 +10,11 @@ To compile the project:
 
 ## Missing 
 
-- Proper settings
-- Possibility to interrupt the work hours for lunch or other reasons
-- Appbar for pages title
 
-## Broken
 
-- Implementation on android seems to not be working properly. Probably is the same on iOS too, since I haven't tested it there yet.
+## Not working
+
+- check in / check out functionality 
 
 ## Notes
 

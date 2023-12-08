@@ -18,7 +18,7 @@ class HiveSettingsAdapter extends TypeAdapter<HiveSettings> {
     };
     return HiveSettings(
       darkTheme: fields[0] as bool,
-      workhours: fields[1] as dynamic,
+      workhours: fields[1] as CustomTime,
     );
   }
 

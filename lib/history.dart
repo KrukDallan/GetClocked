@@ -82,7 +82,7 @@ class HistoryPage extends StatelessWidget {
                       // Start and end time
                       subtitle: (!appState.checks[appState.list.indexOf(i)])
                           ? Text(
-                              "Start: ${appState.parseForHours(appState.formatTime(DateTime.parse(i.$1)))} | End: ",
+                              "Start: ${i.$1} | End: ",
                               style: TextStyle(
                                   color: colorScheme.onSecondary,
                                   fontSize: 11.0),
@@ -93,19 +93,13 @@ class HistoryPage extends StatelessWidget {
                                   color: colorScheme.onSecondary,
                                   fontSize: 11.0),
                             ),
-                      // Overtime
-                      trailing: (appState.checkOuts[appState.checkOuts
-                                      .indexOf(DateTime.parse(i.$2))]
-                                  .difference(appState.checkIns[appState
-                                      .checkIns
-                                      .indexOf(DateTime.parse(i.$1))])
-                                  .compareTo(workHours) >
-                              0)
+                      // Overtime TODO: check overtime
+                      trailing: /* (false)
                           ? Text(
                               "Overtime: ${appState.parseUntilSeconds((appState.checkOuts[appState.checkOuts.indexOf(DateTime.parse(i.$2))].difference(appState.checkIns[appState.checkIns.indexOf(DateTime.parse(i.$1))])).toString())}",
                               style: TextStyle(color: colorScheme.onSecondary),
                             )
-                          : Text(
+                          :  */Text(
                               "Overtime: 00:00:00",
                               style: TextStyle(color: colorScheme.onSecondary),
                             ),

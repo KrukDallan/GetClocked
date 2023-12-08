@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 part 'workhour.g.dart';
@@ -5,10 +6,10 @@ part 'workhour.g.dart';
 @HiveType(typeId: 0)
 class WorkHour extends HiveObject {
   @HiveField(0)
-  late DateTime checkIn;
+  late TimeOfDay? checkIn;
 
   @HiveField(1)
-  late DateTime checkOut;
+  late TimeOfDay? checkOut;
 
   @HiveField(2)
   late int listIndex;

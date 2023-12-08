@@ -3,6 +3,8 @@ import 'package:getclocked/main.dart';
 import 'package:provider/provider.dart';
 import 'package:getclocked/settings.dart';
 
+var timeIn;
+
 class AnnotatePage extends StatelessWidget {
   const AnnotatePage({super.key});
 
@@ -56,51 +58,52 @@ class AnnotatePage extends StatelessWidget {
                           (states) => Colors.white),
                     ),
                     onPressed: () {
-                      final dt = showTimePicker(
-                        context: context, 
-                        builder: (context,child) {
+                      var dt = showTimePicker(
+                        context: context,
+                        builder: (context, child) {
                           return Theme(
-                                      data: ThemeData.light().copyWith(
-                                        colorScheme: (darkTheme)? const ColorScheme(
-                                          brightness: Brightness.dark, 
-                                          primary: Colors.white, 
-                                          onPrimary: Color.fromARGB(255, 95, 91, 91), 
-                                          secondary: Colors.black, 
-                                          onSecondary: Colors.white, 
-                                          background: Colors.black, 
-                                          onBackground: Colors.white,
-                                          error: Colors.red,
-                                          onError: Colors.black,
-                                          surface: Colors.black,
-                                          onSurface: Colors.white,
-                                          ) : const ColorScheme(
-                                            brightness: Brightness.light, 
-                                            primary: Colors.black, 
-                                            onPrimary: Color.fromARGB(255, 193, 187, 187), 
-                                            secondary: Colors.white, 
-                                            onSecondary: Colors.black, 
-                                            error: Colors.red, 
-                                            onError: Colors.black, 
-                                            background: Colors.white, 
-                                            onBackground: Colors.black, 
-                                            surface: Colors.white, 
-                                            onSurface: Colors.black) ,
-                                      ) , 
-                                      // remove the "AM/PM" widget
-                                      child: MediaQuery(
-                                        data: MediaQuery.of(context).copyWith(
-                                          alwaysUse24HourFormat: true,
-                                        ),
-                                        child: child!,
-                                      ));
+                              data: ThemeData.light().copyWith(
+                                colorScheme: (darkTheme)
+                                    ? const ColorScheme(
+                                        brightness: Brightness.dark,
+                                        primary: Colors.white,
+                                        onPrimary:
+                                            Color.fromARGB(255, 95, 91, 91),
+                                        secondary: Colors.black,
+                                        onSecondary: Colors.white,
+                                        background: Colors.black,
+                                        onBackground: Colors.white,
+                                        error: Colors.red,
+                                        onError: Colors.black,
+                                        surface: Colors.black,
+                                        onSurface: Colors.white,
+                                      )
+                                    : const ColorScheme(
+                                        brightness: Brightness.light,
+                                        primary: Colors.black,
+                                        onPrimary:
+                                            Color.fromARGB(255, 193, 187, 187),
+                                        secondary: Colors.white,
+                                        onSecondary: Colors.black,
+                                        error: Colors.red,
+                                        onError: Colors.black,
+                                        background: Colors.white,
+                                        onBackground: Colors.black,
+                                        surface: Colors.white,
+                                        onSurface: Colors.black),
+                              ),
+                              // remove the "AM/PM" widget
+                              child: MediaQuery(
+                                data: MediaQuery.of(context).copyWith(
+                                  alwaysUse24HourFormat: true,
+                                ),
+                                child: child!,
+                              ));
                         },
-                        initialTime: TimeOfDay.now(),);
-                        
-                      if (!appState.onlyIn &&
-                          ((appState.checkIns.isNotEmpty &&
-                                  appState.compareToLastCheckIn(dt)) ||
-                              (appState.checkIns.isEmpty))) {
-                        appState.annotateIn(dt);
+                        initialTime: TimeOfDay.now(),
+                      ).then((value) => timeIn = value) ;
+                      if (!appState.onlyIn || (appState.checkIns.isEmpty)) {
+                        appState.annotateIn(timeIn);
                         var snackBar =
                             appState.createSnackBar('You have checked in!');
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -136,7 +139,50 @@ class AnnotatePage extends StatelessWidget {
                     ),
                     onPressed: () {
                       if (appState.onlyIn) {
-                        final dt = appState.getTime();
+                        final TimeOfDay? dt = showTimePicker(
+                        context: context,
+                        builder: (context, child) {
+                          return Theme(
+                              data: ThemeData.light().copyWith(
+                                colorScheme: (darkTheme)
+                                    ? const ColorScheme(
+                                        brightness: Brightness.dark,
+                                        primary: Colors.white,
+                                        onPrimary:
+                                            Color.fromARGB(255, 95, 91, 91),
+                                        secondary: Colors.black,
+                                        onSecondary: Colors.white,
+                                        background: Colors.black,
+                                        onBackground: Colors.white,
+                                        error: Colors.red,
+                                        onError: Colors.black,
+                                        surface: Colors.black,
+                                        onSurface: Colors.white,
+                                      )
+                                    : const ColorScheme(
+                                        brightness: Brightness.light,
+                                        primary: Colors.black,
+                                        onPrimary:
+                                            Color.fromARGB(255, 193, 187, 187),
+                                        secondary: Colors.white,
+                                        onSecondary: Colors.black,
+                                        error: Colors.red,
+                                        onError: Colors.black,
+                                        background: Colors.white,
+                                        onBackground: Colors.black,
+                                        surface: Colors.white,
+                                        onSurface: Colors.black),
+                              ),
+                              // remove the "AM/PM" widget
+                              child: MediaQuery(
+                                data: MediaQuery.of(context).copyWith(
+                                  alwaysUse24HourFormat: true,
+                                ),
+                                child: child!,
+                              ));
+                        },
+                        initialTime: TimeOfDay.now(),
+                      ) as TimeOfDay?;
                         appState.annotateOut(dt);
                         var snackBar =
                             appState.createSnackBar('You have checked out!');

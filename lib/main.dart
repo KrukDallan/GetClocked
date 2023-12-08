@@ -14,8 +14,8 @@ import 'package:getclocked/history.dart';
 
 // TODO: LinkedHashMap or Set instead of List
 
-var boxCheckIns = <DateTime>[];
-var boxCheckOuts = <DateTime>[];
+var boxCheckIns = <TimeOfDay?>[];
+var boxCheckOuts = <TimeOfDay?>[];
 var boxBools = <bool>[];
 var boxList = <(String, String)>[];
 
@@ -34,16 +34,17 @@ void main() async {
   Hive.registerAdapter(HiveSettingsAdapter());
   Hive.registerAdapter(CustomTimeAdapter());
 
-  boxWorkHours = await Hive.openBox<WorkHour>('workHour');
+  boxWorkHours = await Hive.openBox<WorkHour>('workHour3');
 
   if (boxWorkHours.length > 0) {
-    for (int i = 0; i < boxWorkHours.length; i++) {
+    /* for (int i = 0; i < boxWorkHours.length; i++) {
       WorkHour wh = boxWorkHours.getAt(i);
       boxCheckIns.add(wh.checkIn);
       boxCheckOuts.add(wh.checkOut);
       boxBools.add(wh.check);
       boxList.add((wh.checkIn.toString(), wh.checkOut.toString()));
-    }
+    } */
+    boxWorkHours.clear();
   }
 
   boxSettings = await Hive.openBox<HiveSettings>('settings');
@@ -174,15 +175,15 @@ class MyAppState extends ChangeNotifier {
     return splitted[1];
   }
 
-  void annotateIn(DateTime dt) {
-    checkIns.add(dt);
-    checkOuts.add(dt);
+  void annotateIn(TimeOfDay? tod) async{
+    checkIns.add(tod);
+    checkOuts.add(tod);
     onlyIn = true;
     checks.add(false);
-    list.add((dt.toString(), dt.toString()));
+    list.add((tod.toString(), tod.toString()));
     boxWorkHours.add(WorkHour(
-        checkIn: dt,
-        checkOut: dt,
+        checkIn: tod,
+        checkOut: tod,
         listIndex: listIndex,
         check: false,
         onlyIn: onlyIn));
@@ -194,7 +195,7 @@ class MyAppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void annotateOut(DateTime dt) {
+  void annotateOut(TimeOfDay? dt) async {
     checkOuts.add(dt);
     var current = (checkIns[listIndex].toString(), dt.toString());
     list.removeAt(listIndex);
@@ -246,7 +247,8 @@ class MyAppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool compareToLastCheckIn(DateTime dt) {
+
+  /* bool compareToLastCheckIn(DateTime dt) {
     var idx = checkIns.length - 1;
     if (dt.year != checkIns[idx].year) {
       return true;
@@ -260,7 +262,7 @@ class MyAppState extends ChangeNotifier {
     } else {
       return false;
     }
-  }
+  } */
 
   SnackBar createSnackBar(String msg) {
     return SnackBar(

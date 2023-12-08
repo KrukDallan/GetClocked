@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:getclocked/boxes.dart';
 import 'package:getclocked/hivesettings.dart';
@@ -5,7 +7,7 @@ import 'package:getclocked/main.dart';
 import 'package:provider/provider.dart';
 
 //bool darkTheme = (ThemeMode.system == ThemeMode.light) ? false : true;
-
+late Future<TimeOfDay?> selectedTime;
 bool darkTheme = (boxSettings.length > 0)? (boxSettings.getAt(0) as HiveSettings).getThemeAsBool() : ((ThemeMode.system == ThemeMode.light)? false : true);
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -14,7 +16,6 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var colorScheme = Theme.of(context).colorScheme;
     var appState = context.watch<MyAppState>();
-    var selectedTime;
 
     return SafeArea(
       child: Scaffold(
