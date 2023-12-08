@@ -98,6 +98,42 @@ class SettingsPage extends StatelessWidget {
                                 ),
                                 onPressed: () {selectedTime = showTimePicker(
                                   context: context, 
+                                  builder: (context, child) {
+                                    return Theme(
+                                      data: ThemeData.light().copyWith(
+                                        colorScheme: (darkTheme)? const ColorScheme(
+                                          brightness: Brightness.dark, 
+                                          primary: Colors.white, 
+                                          onPrimary: Color.fromARGB(255, 95, 91, 91), 
+                                          secondary: Colors.black, 
+                                          onSecondary: Colors.white, 
+                                          background: Colors.black, 
+                                          onBackground: Colors.white,
+                                          error: Colors.red,
+                                          onError: Colors.black,
+                                          surface: Colors.black,
+                                          onSurface: Colors.white,
+                                          ) : const ColorScheme(
+                                            brightness: Brightness.light, 
+                                            primary: Colors.black, 
+                                            onPrimary: Color.fromARGB(255, 193, 187, 187), 
+                                            secondary: Colors.white, 
+                                            onSecondary: Colors.black, 
+                                            error: Colors.red, 
+                                            onError: Colors.black, 
+                                            background: Colors.white, 
+                                            onBackground: Colors.black, 
+                                            surface: Colors.white, 
+                                            onSurface: Colors.black) ,
+                                      ) , 
+                                      // remove the "AM/PM" widget
+                                      child: MediaQuery(
+                                        data: MediaQuery.of(context).copyWith(
+                                          alwaysUse24HourFormat: true,
+                                        ),
+                                        child: child!,
+                                      ));
+                                  } ,
                                   initialTime: const TimeOfDay(hour: 8, minute: 45),
                                   );},
                                 child: Icon(
