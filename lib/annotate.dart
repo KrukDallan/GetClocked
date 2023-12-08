@@ -115,32 +115,6 @@ class AnnotatePage extends StatelessWidget {
               ],
             ),
             const Padding(padding: EdgeInsets.all(30)),
-            ElevatedButton(
-                child: Text(
-                  'Pause clock',
-                  style: TextStyle(color: colorScheme.onSecondary),
-                ),
-                onPressed: () => showDialog(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                            backgroundColor: colorScheme.secondary,
-                            title: const Text('Pause clock'),
-                            content: const Text(
-                                'Do you really wish to pause the clock?'),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () =>
-                                    Navigator.pop(context, 'Cancel'),
-                                child: Text('Cancel', style: TextStyle(color: colorScheme.onPrimary),),
-                              ),
-                              TextButton(
-                                onPressed: () => {
-                                  // TODO: implement the 'stop clock' functionality
-                                  Navigator.pop(context, 'Yes!')
-                                },
-                                child: Text('Yes!',style: TextStyle(color: colorScheme.onPrimary)),
-                              ),
-                            ]))), 
             const Expanded(
               child: Text(''),
             ),
