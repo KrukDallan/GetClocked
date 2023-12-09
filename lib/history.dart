@@ -75,23 +75,18 @@ class HistoryPage extends StatelessWidget {
                               ])),
                   child: Card(
                     child: ListTile(
-                      title: Text(
-                        dates[appState.list.indexOf(i)],
-                        style: TextStyle(color: colorScheme.onSecondary),
-                      ),
-                      // Start and end time
-                      subtitle: (!appState.checks[appState.list.indexOf(i)])
+                      title: (!appState.checks[appState.list.indexOf(i)])
                           ? Text(
                               "Start: ${i.$1} | End: ",
                               style: TextStyle(
-                                  color: colorScheme.onSecondary,
-                                  fontSize: 11.0),
+                                  color: colorScheme.onSecondary,)
+                                  
                             )
                           : Text(
-                              "Start: ${appState.parseForHours(appState.formatTime(DateTime.parse(i.$1)))} | End: ${appState.parseForHours(appState.formatTime(DateTime.parse(i.$2)))}",
+                              "Start: ${i.$1} | End: ${i.$2}",
                               style: TextStyle(
                                   color: colorScheme.onSecondary,
-                                  fontSize: 11.0),
+                                  ),
                             ),
                       // Overtime TODO: check overtime
                       trailing: /* (false)

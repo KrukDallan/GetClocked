@@ -101,9 +101,9 @@ class AnnotatePage extends StatelessWidget {
                               ));
                         },
                         initialTime: TimeOfDay.now(),
-                      ).then((value) => timeIn = value) ;
+                      ).then((value) => appState.annotateIn(value) );
                       if (!appState.onlyIn || (appState.checkIns.isEmpty)) {
-                        appState.annotateIn(timeIn);
+                        //appState.annotateIn(timeIn);
                         var snackBar =
                             appState.createSnackBar('You have checked in!');
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -139,7 +139,7 @@ class AnnotatePage extends StatelessWidget {
                     ),
                     onPressed: () {
                       if (appState.onlyIn) {
-                        final TimeOfDay? dt = showTimePicker(
+                        var dt = showTimePicker(
                         context: context,
                         builder: (context, child) {
                           return Theme(
@@ -182,8 +182,7 @@ class AnnotatePage extends StatelessWidget {
                               ));
                         },
                         initialTime: TimeOfDay.now(),
-                      ) as TimeOfDay?;
-                        appState.annotateOut(dt);
+                      ).then((value) => appState.annotateOut(value));
                         var snackBar =
                             appState.createSnackBar('You have checked out!');
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);

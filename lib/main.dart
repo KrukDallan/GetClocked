@@ -34,17 +34,17 @@ void main() async {
   Hive.registerAdapter(HiveSettingsAdapter());
   Hive.registerAdapter(CustomTimeAdapter());
 
-  boxWorkHours = await Hive.openBox<WorkHour>('workHour3');
+  boxWorkHours = await Hive.openBox<WorkHour>('workHour4');
 
   if (boxWorkHours.length > 0) {
-    /* for (int i = 0; i < boxWorkHours.length; i++) {
+     for (int i = 0; i < boxWorkHours.length; i++) {
       WorkHour wh = boxWorkHours.getAt(i);
       boxCheckIns.add(wh.checkIn);
       boxCheckOuts.add(wh.checkOut);
       boxBools.add(wh.check);
       boxList.add((wh.checkIn.toString(), wh.checkOut.toString()));
-    } */
-    boxWorkHours.clear();
+    } 
+    //boxWorkHours.clear();
   }
 
   boxSettings = await Hive.openBox<HiveSettings>('settings');
@@ -180,7 +180,7 @@ class MyAppState extends ChangeNotifier {
     checkOuts.add(tod);
     onlyIn = true;
     checks.add(false);
-    list.add((tod.toString(), tod.toString()));
+    list.add(('${tod?.hour}:${tod?.minute}', '${tod?.hour}:${tod?.minute}'));
     boxWorkHours.add(WorkHour(
         checkIn: tod,
         checkOut: tod,
